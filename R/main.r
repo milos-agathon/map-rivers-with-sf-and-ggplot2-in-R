@@ -3,7 +3,6 @@
 #                 Milos Popovic
 #                 2022/03/27
 ################################################################################
-sf::sf_use_s2(FALSE)
 windowsFonts(georg = windowsFont('Georgia'))
 
 # libraries we need
@@ -53,7 +52,11 @@ get_rivers <- function(filenames, list_riv, eu_riv) {
                            width == 10 ~ 0.1,
                            TRUE ~ 0)) %>% 
   st_as_sf()
-
+  
+  eu_riv$geometry <- eu_riv$geometry %>%
+  s2::s2_rebuild() %>%
+  sf::st_as_sfc()
+  
   return(eu_riv)
 }
 
