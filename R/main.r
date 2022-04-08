@@ -3,7 +3,7 @@
 #                 Milos Popovic
 #                 2022/03/27
 ################################################################################
-
+sf::sf_use_s2(FALSE)
 windowsFonts(georg = windowsFont('Georgia'))
 
 # libraries we need
