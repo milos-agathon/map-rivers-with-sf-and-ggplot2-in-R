@@ -32,6 +32,17 @@ get_data <- function(url, res, filenames) {
   return(filenames)
 }
 
+# ALTERNATIVELY:
+# Download manually from https://www.hydrosheds.org/products/hydrorivers HydroRIVERS_v10_eu_shp.zip
+# or use wget in terminal
+# wget https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_eu_shp.zip
+# Then run this code:
+# get_data <- function(url, res, filenames) {
+#  unzip("HydroRIVERS_v10_eu_shp.zip") #unzip, need once only
+#  filenames <- list.files("HydroRIVERS_v10_eu_shp", pattern="*.shp", full.names=T)
+#  return(filenames)
+# }
+
 # 2. CREATE RIVER WIDTH
 #---------
 
