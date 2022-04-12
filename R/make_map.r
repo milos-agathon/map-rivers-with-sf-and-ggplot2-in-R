@@ -19,7 +19,7 @@ get_river_map <- function(eu_riv, bbox, p) {
     scale_size(range=c(0, .3)) +
     scale_alpha_manual(values=c("3" = 1, "4" = 1, "5" = .7, "6" = .6, "7" = .4, "8" = .3, "9" = .2, "10" = .1)) +
     theme_minimal() +
-    theme(text = element_text(family = "georg"),
+    theme(text = element_text(family = "georg"), #comment out if you work in Linux
       panel.background = element_blank(), 
       legend.background = element_blank(),
       legend.position = "none",
