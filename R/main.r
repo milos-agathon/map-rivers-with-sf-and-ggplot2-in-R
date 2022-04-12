@@ -3,7 +3,7 @@
 #                 Milos Popovic
 #                 2022/03/27
 ################################################################################
-windowsFonts(georg = windowsFont('Georgia'))
+windowsFonts(georg = windowsFont('Georgia')) # comment out if you work on Linux
 
 # libraries we need
 libs <- c("httr", "tidyverse", "sf")
