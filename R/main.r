@@ -22,7 +22,7 @@ invisible(lapply(libs, library, character.only = T))
 
 get_data <- function(url, res, filenames) {
 
-  url <- "https://m201.syncusercontent1.com/mfs-60:cb0f370cfc9aad110e47af0c14c6d6a0=============================/p/HydroRIVERS_v10_eu_shp.zip?allowdd=0&datakey=ge8BrffNb5ff90cF/3Dr8CGlfSRTS2g+I3poOJEOpd65Nwv0agBsI6yzqEFKLIDb/9iORBIKcrW+jONfWXU+Dm2WNnWn2KcP3R2WQMtiHUpSXuIg9e3gkGUd+nMSCIDRVvkSLQfFifZAeYjNKnNMSWPKn5mJIC/0RZ3kWGVVfDgZRYHLVgMMtxn+47XRsMbvz2WOE8R8J4n0RB7xVI5tlpmFR8Bv3nZB0HYc43cdyYSW5DqyKGji5CkoYTBNzE/jow5oBri2TOZWNxWVV9ET/9/udwd8KuOH++GoRzpgVJZ5WH1LgW7IBaHnDPTHdYENxRe/4JNlXanhauLfqOMNMQ&engine=ln-1.11.18&errurl=GLK4RA2KpWnRCSNSKOrDC8T6XxhjDIuUGGVvUo/zJAGGma48px5C67R8o6en+Qmegmceb/EJkpCEYm4SRBZDNMs+CgNFjFgEYdN4byFeygcAnvSAclpxktxsJc18rczzZtNuL4oyVr7SxjPeDdyHsveNgnibmLp1UWA45i5K12NRlbfK55BDYGOrwLu2RRJUm4AWUNeYpo4f8yqZ8zxQGUuLcKGx68bKP5I7ri8Lf8nkGsxRvT/axtcNmUiaZ706TofwP6mkzzaDZs+xin46q3P//GOuLornz7vN+q/d89qYsgpm5KsqyqEV+DePj2K6/vMDT4BLYWtxLeY1ESZgyg==&header1=Q29udGVudC1UeXBlOiBhcHBsaWNhdGlvbi96aXA&header2=Q29udGVudC1EaXNwb3NpdGlvbjogYXR0YWNobWVudDsgZmlsZW5hbWU9Ikh5ZHJvUklWRVJTX3YxMF9ldV9zaHAuemlwIjtmaWxlbmFtZSo9VVRGLTgnJ0h5ZHJvUklWRVJTX3YxMF9ldV9zaHAuemlwOw&ipaddress=1398165091&linkcachekey=89159c590&linkoid=51000013&mode=101&sharelink_id=3443504720013&timestamp=1649430246943&uagent=0c3c442ba67c66fa3227e09aeb8c763c79676604&signature=1cdeb688c90dc709eb9e652f6ccaf3beaa64197c&cachekey=60:cb0f370cfc9aad110e47af0c14c6d6a0============================="
+  url <- "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_eu_shp.zip"
   res <- GET(url,
              write_disk("eu_rivers.zip"),
              progress())
