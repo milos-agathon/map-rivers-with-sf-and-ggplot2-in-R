@@ -3,7 +3,8 @@
 #                 Milos Popovic
 #                 2022/03/27
 ################################################################################
-windowsFonts(georg = windowsFont('Georgia')) # comment out if you work on Linux
+
+windowsFonts(georg = windowsFont("Georgia"))
 
 # libraries we need
 libs <- c("httr", "tidyverse", "sf")
@@ -21,72 +22,67 @@ invisible(lapply(libs, library, character.only = T))
 #---------
 
 get_data <- function(url, res, filenames) {
-
   url <- "https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_eu_shp.zip"
-  res <- GET(url,
-             write_disk("eu_rivers.zip"),
-             progress())
-  unzip("eu_rivers.zip") #unzip
-  filenames <- list.files("HydroRIVERS_v10_eu_shp", pattern="*.shp", full.names=T)
+  res <- GET(
+    url,
+    write_disk("eu_rivers.zip"),
+    progress()
+  )
+  unzip("eu_rivers.zip") # unzip
+  filenames <- list.files("HydroRIVERS_v10_eu_shp",
+    pattern = "*.shp", full.names = T
+  )
 
   return(filenames)
 }
-
-# ALTERNATIVELY:
-# Download manually from https://www.hydrosheds.org/products/hydrorivers HydroRIVERS_v10_eu_shp.zip
-# or use wget in terminal
-# wget https://data.hydrosheds.org/file/HydroRIVERS/HydroRIVERS_v10_eu_shp.zip
-# Then run this code:
-# get_data <- function(url, res, filenames) {
-#  unzip("HydroRIVERS_v10_eu_shp.zip") #unzip, need once only
-#  filenames <- list.files("HydroRIVERS_v10_eu_shp", pattern="*.shp", full.names=T)
-#  return(filenames)
-# }
 
 # 2. CREATE RIVER WIDTH
 #---------
 
 get_rivers <- function(filenames, list_riv, eu_riv) {
-
   filenames <- get_data()
-  list_riv <- lapply(filenames, st_read)
-  eu_riv <- list_riv[[1]] %>% 
-  st_cast("MULTILINESTRING") %>% 
-  mutate(width = as.numeric(ORD_FLOW),
-         width = case_when(width == 3 ~ 1,
-                           width == 4 ~ 0.8,
-                           width == 5 ~ 0.6,
-                           width == 6 ~ 0.4,
-                           width == 7 ~ 0.2,
-                           width == 8 ~ 0.2,
-                           width == 9 ~ 0.1,
-                           width == 10 ~ 0.1,
-                           TRUE ~ 0)) %>% 
-  st_as_sf()
-  
+  list_riv <- lapply(filenames, sf::st_read)
+  eu_riv <- list_riv[[1]] %>%
+    st_cast("MULTILINESTRING") %>%
+    mutate(
+      width = as.numeric(ORD_FLOW),
+      width = case_when(
+        width == 3 ~ 1,
+        width == 4 ~ 0.8,
+        width == 5 ~ 0.6,
+        width == 6 ~ 0.4,
+        width == 7 ~ 0.2,
+        width == 8 ~ 0.2,
+        width == 9 ~ 0.1,
+        width == 10 ~ 0.1,
+        TRUE ~ 0
+      )
+    ) %>%
+    st_as_sf()
+
   eu_riv$geometry <- eu_riv$geometry %>%
-  s2::s2_rebuild() %>%
-  sf::st_as_sfc()
-  
+    s2::s2_rebuild() %>%
+    sf::st_as_sfc()
+
   return(eu_riv)
 }
 
 # 3. MAKE BOUNDING BOX
 #---------
 
-get_bounding_box <- function(crsLONGLAT, bbox, new_prj, bb) {
+crsLONGLAT <- "+proj=longlat +datum=WGS84 +no_defs"
 
-  crsLONGLAT <- "+proj=longlat +datum=WGS84 +no_defs"
-
+get_bounding_box <- function(bbox, new_prj, bb) {
   bbox <- st_sfc(
-  st_polygon(list(cbind(
-    c(-10.5, 48.5, 48.5, -10.5, -10.5), # x-coordinates (longitudes) of points A,B,C,D
-    c(35.000, 35.000, 69.5, 69.5, 35.000)     # y-coordinates (latitudes) of points A,B,C,D
+    st_polygon(list(cbind(
+      c(-10.5, 48.5, 48.5, -10.5, -10.5),
+      c(35.000, 35.000, 69.5, 69.5, 35.000)
     ))),
-  crs = crsLONGLAT)
+    crs = crsLONGLAT
+  )
 
-  new_prj <- st_transform(bbox, crs = 4087)
-  bb <- st_bbox(new_prj)
+  new_prj <- sf::st_transform(bbox, crs = 4087)
+  bb <- sf::st_bbox(new_prj)
 
   return(bb)
 }
