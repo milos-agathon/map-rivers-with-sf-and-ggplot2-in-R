@@ -92,6 +92,8 @@ get_bounding_box <- function(bbox, new_prj, bb) {
     return(bb)
 }
 
+bbox <- get_bounding_box()
+
 # 4. MAP
 #---------
 
