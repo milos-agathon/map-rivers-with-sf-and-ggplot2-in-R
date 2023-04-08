@@ -1,5 +1,3 @@
-setwd("/Users/mpopovic3/Downloads")
-
 # libraries we need
 libs <- c(
     "httr", "tidyverse", "sf"
