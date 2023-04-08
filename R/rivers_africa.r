@@ -11,7 +11,6 @@ if (any(installed_libs == F)) {
 
 # load libraries
 invisible(lapply(libs, library, character.only = T))
-
 # 1. GET RIVERS DATA
 #---------
 
